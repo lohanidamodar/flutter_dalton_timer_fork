@@ -1,6 +1,4 @@
-import 'dart:async';
-
-import 'package:dalton_timer/widgets/timerface.dart';
+import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
 
 class TimerPage extends StatelessWidget {
@@ -78,7 +76,7 @@ class _TimerClockState extends State<_TimerClock>
           tag: widget.initialDuration,
           child: Padding(
             padding: EdgeInsets.all(12.0),
-            child: TimerFace(widget.timerColor,
+            child: FaceWithShadow(widget.timerColor,
                 _running ? _remainingAnimation.value : widget.initialDuration, 
                 initialDuration: widget.initialDuration,),
           ),
