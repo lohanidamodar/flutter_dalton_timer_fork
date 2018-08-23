@@ -1,4 +1,4 @@
-package com.example.daltontimer
+package pl.ukaszapps.daltontimer
 
 import android.os.Bundle
 
