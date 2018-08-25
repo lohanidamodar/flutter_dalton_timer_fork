@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:dalton_timer/screenwakelock.dart';
+import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
+import 'package:soundpool/soundpool.dart';
 
 class TimerPage extends StatelessWidget {
   final Color timerColor;
@@ -51,12 +55,15 @@ class _TimerClockState extends State<_TimerClock>
     _running = false;
     _timerController =
         AnimationController(vsync: this, duration: widget.initialDuration)
-            ..addStatusListener((status) {
-      if (status == AnimationStatus.dismissed ||
-          status == AnimationStatus.completed) {
-        _clearScreenAwakeLock();
-      }
-    });
+          ..addStatusListener((status) {
+            if (status == AnimationStatus.dismissed ||
+                status == AnimationStatus.completed) {
+              _clearScreenAwakeLock();
+            }
+            if (status == AnimationStatus.completed) {
+              _playAlarmSound(context);
+            }
+          });
 
     _remainingAnimation =
         Tween(begin: widget.initialDuration, end: Duration.zero)
@@ -73,7 +80,7 @@ class _TimerClockState extends State<_TimerClock>
     _timerController.stop();
     _timerController.dispose();
     _clearScreenAwakeLock();
-  }
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -125,4 +132,9 @@ class _TimerClockState extends State<_TimerClock>
   void _clearScreenAwakeLock() {
     clearAwake();
   }
+
+  void _playAlarmSound(BuildContext context) {
+    SoundsProvider.of(context).playAlarm();
+  }
+
 }
