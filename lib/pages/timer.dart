@@ -1,3 +1,4 @@
+import 'package:dalton_timer/screenwakelock.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
 
@@ -49,23 +50,30 @@ class _TimerClockState extends State<_TimerClock>
     super.initState();
     _running = false;
     _timerController =
-        AnimationController(vsync: this, duration: widget.initialDuration);
-    
+        AnimationController(vsync: this, duration: widget.initialDuration)
+            ..addStatusListener((status) {
+      if (status == AnimationStatus.dismissed ||
+          status == AnimationStatus.completed) {
+        _clearScreenAwakeLock();
+      }
+    });
+
     _remainingAnimation =
         Tween(begin: widget.initialDuration, end: Duration.zero)
-            .animate(_timerController)..addListener((){
-              setState(() {});
-            });
+            .animate(_timerController)
+              ..addListener(() {
+                setState(() {});
+              });
   }
 
   @override
-    void dispose() {
-      super.dispose();
-      _running = false;
-      _timerController.stop();
-      _timerController.dispose();
-      
-    }
+  void dispose() {
+    super.dispose();
+    _running = false;
+    _timerController.stop();
+    _timerController.dispose();
+    _clearScreenAwakeLock();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +84,11 @@ class _TimerClockState extends State<_TimerClock>
           tag: widget.initialDuration,
           child: Padding(
             padding: EdgeInsets.all(12.0),
-            child: FaceWithShadow(widget.timerColor,
-                _running ? _remainingAnimation.value : widget.initialDuration, 
-                initialDuration: widget.initialDuration,),
+            child: FaceWithShadow(
+              widget.timerColor,
+              _running ? _remainingAnimation.value : widget.initialDuration,
+              initialDuration: widget.initialDuration,
+            ),
           ),
         ),
         AnimatedOpacity(
@@ -101,10 +111,18 @@ class _TimerClockState extends State<_TimerClock>
   }
 
   void _startTicking() {
+    _setScreenAwakeLock();
     setState(() {
       _running = true;
       _timerController.forward();
-      
     });
+  }
+
+  void _setScreenAwakeLock() {
+    setAwake();
+  }
+
+  void _clearScreenAwakeLock() {
+    clearAwake();
   }
 }
