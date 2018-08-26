@@ -1,3 +1,4 @@
+import 'package:dalton_timer/pages/about_app.dart';
 import 'package:dalton_timer/pages/timer.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
@@ -36,48 +37,12 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.timelapse),
-            onPressed: () {
-              showModalBottomSheet<Duration>(
-                context: context,
-                builder: (BuildContext c) => Container(
-                      padding: EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: <Widget>[
-                          TextField(
-                            autofocus: true,
-                            decoration: InputDecoration(
-                              hintText: "Enter time in minutes",
-                            ),
-                            keyboardType: TextInputType.numberWithOptions(),
-                            key: timeInput,
-                            onChanged: (text) {
-                              _minutesText = text;
-                            },
-                          ),
-                          SizedBox(
-                            height: 8.0,
-                          ),
-                          RaisedButton(
-                            onPressed: () {
-                              int minutes = int.parse(_minutesText);
-                              Duration duration = minutes != null
-                                  ? Duration(minutes: minutes)
-                                  : null;
-                              Navigator.of(context).pop(duration);
-                            },
-                            child: Text("OK"),
-                          ),
-                        ],
-                      ),
-                    ),
-              ).then((durationPicked) {
-                if (durationPicked != null) {
-                  _onDurationSelected(Colors.brown, durationPicked);
-                }
-              });
-            },
-          )
+            onPressed: () => _onCustomTime(context, timeInput),
+          ),
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            onPressed: _onAppInfo,
+          ),
         ],
       ),
       body: Column(
@@ -124,6 +89,52 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
         ],
       ),
     );
+  }
+
+  void _onCustomTime(
+      BuildContext context, GlobalKey<State<TextField>> timeInput) {
+    showModalBottomSheet<Duration>(
+      context: context,
+      builder: (BuildContext c) => Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: "Enter time in minutes",
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(),
+                  key: timeInput,
+                  onChanged: (text) {
+                    _minutesText = text;
+                  },
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    int minutes = int.parse(_minutesText);
+                    Duration duration =
+                        minutes != null ? Duration(minutes: minutes) : null;
+                    Navigator.of(context).pop(duration);
+                  },
+                  child: Text("OK"),
+                ),
+              ],
+            ),
+          ),
+    ).then((durationPicked) {
+      if (durationPicked != null) {
+        _onDurationSelected(Colors.brown, durationPicked);
+      }
+    });
+  }
+
+  void _onAppInfo() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppInfo(),));
   }
 }
 
