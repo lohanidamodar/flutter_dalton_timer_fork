@@ -59,7 +59,7 @@ class _FaceWithShadowRemaining extends CustomPainter {
         startAngle, _angle, true, _remainingPaint);
 
     // presenting text
-    final aboveHalfAnHour = _angle > pi;
+    /*final aboveHalfAnHour = _angle > pi;
     Color textColor;
     String text = "${duration.inMinutes}";
     double textX;
@@ -84,7 +84,7 @@ class _FaceWithShadowRemaining extends CustomPainter {
         canvas,
         Offset(
             textX - timePainter.width / 2, centerY - timePainter.height / 2));
-  
+  */
     }
 }
 

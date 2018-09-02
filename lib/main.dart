@@ -10,7 +10,9 @@ class MyApp extends StatelessWidget {
     return  SoundsProvider(
       child: MaterialApp(
         title: 'Dalton Timer',
-        theme:  ThemeData(primarySwatch: Colors.blueGrey,
+        theme:  ThemeData(
+            primarySwatch: Colors.blueGrey,
+          accentColor: Colors.cyanAccent.shade100
         ),
         home:  TimeSelectionPage(),
       ),

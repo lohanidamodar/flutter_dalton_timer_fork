@@ -128,7 +128,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
           ),
     ).then((durationPicked) {
       if (durationPicked != null) {
-        _onDurationSelected(Colors.brown, durationPicked);
+        _onDurationSelected(Theme.of(context).accentColor, durationPicked);
       }
     });
   }
@@ -155,15 +155,30 @@ class _TimerCell extends StatelessWidget {
           decoration: BoxDecoration(
             color: color.withOpacity(0.07),
           ),
-          child: Hero(
-            tag: duration,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: FaceWithShadow(
-                color,
-                duration,
+          child: Stack(
+            alignment: Alignment.center,
+            fit: StackFit.expand,
+            children: <Widget>[
+              Hero(
+                tag: duration,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FaceWithShadow(
+                    color,
+                    duration,
+                  ),
+                ),
               ),
-            ),
+              Center(
+                child: Transform(
+                  transform: Matrix4.translationValues(0.0, Theme.of(context).textTheme.headline.fontSize*0.75, 0.0),
+                  child: Hero(
+                    tag: duration.inMinutes,
+                    child: Text("${duration.inMinutes}", style: Theme.of(context).textTheme.headline,),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

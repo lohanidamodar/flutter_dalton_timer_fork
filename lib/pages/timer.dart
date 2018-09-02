@@ -49,10 +49,13 @@ class _TimerClockState extends State<_TimerClock>
   AnimationController _timerController;
   Animation<Duration> _remainingAnimation;
 
+  int _minutesLeft;
+
   @override
   void initState() {
     super.initState();
     _running = false;
+    _minutesLeft = widget.initialDuration.inMinutes;
     _timerController =
         AnimationController(vsync: this, duration: widget.initialDuration)
           ..addStatusListener((status) {
@@ -65,12 +68,14 @@ class _TimerClockState extends State<_TimerClock>
             }
           });
 
-    _remainingAnimation =
-        Tween(begin: widget.initialDuration, end: Duration.zero)
-            .animate(_timerController)
-              ..addListener(() {
-                setState(() {});
-              });
+    _remainingAnimation = Tween(
+            begin: widget.initialDuration, end: Duration.zero)
+        .animate(_timerController)
+          ..addListener(() {
+            setState(() {
+              _minutesLeft = (_remainingAnimation.value.inSeconds / 60).ceil();
+            });
+          });
   }
 
   @override
@@ -80,37 +85,58 @@ class _TimerClockState extends State<_TimerClock>
     _timerController.stop();
     _timerController.dispose();
     _clearScreenAwakeLock();
-   }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Hero(
-          tag: widget.initialDuration,
-          child: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: FaceWithShadow(
-              widget.timerColor,
-              _running ? _remainingAnimation.value : widget.initialDuration,
-              initialDuration: widget.initialDuration,
-            ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Center(
+            child: Hero(
+                tag: widget.initialDuration.inMinutes,
+                child: Text(
+                  "$_minutesLeft",
+                  style: Theme
+                      .of(context)
+                      .accentTextTheme
+                      .display3
+                      .copyWith(fontWeight: FontWeight.bold),
+                )),
           ),
         ),
-        AnimatedOpacity(
-          opacity: _running ? 0.0 : 0.45,
-          duration: Duration(milliseconds: 200),
-          child: GestureDetector(
-            child: LayoutBuilder(
-                builder: (context, constraints) => Icon(
-                      Icons.play_circle_outline,
-                      color: Colors.black,
-                      size: constraints.biggest.shortestSide,
-                    )),
-            onTap: () {
-              _startTicking();
-            },
+        Expanded(
+          child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+              Hero(
+                tag: widget.initialDuration,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+                  child: FaceWithShadow(
+                    widget.timerColor,
+                    _running
+                        ? _remainingAnimation.value
+                        : widget.initialDuration,
+                    initialDuration: widget.initialDuration,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                child: LayoutBuilder(
+                    builder: (context, constraints) => Icon(
+                          Icons.play_circle_outline,
+                          color: Colors.black.withOpacity(0.45),
+                          size: constraints.biggest.shortestSide,
+                        )),
+                onTap: () {
+                  _startTicking();
+                },
+              ),
+            ],
           ),
         ),
       ],
@@ -136,5 +162,4 @@ class _TimerClockState extends State<_TimerClock>
   void _playAlarmSound(BuildContext context) {
     SoundsProvider.of(context).playAlarm();
   }
-
 }
