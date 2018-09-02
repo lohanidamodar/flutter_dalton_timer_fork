@@ -67,3 +67,5 @@ Icon?
 
 Pods/
 .symlinks/
+android/key.properties
+android/app/release/
