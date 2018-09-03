@@ -80,11 +80,10 @@ class _TimerClockState extends State<_TimerClock>
 
   @override
   void dispose() {
-    super.dispose();
     _running = false;
-    _timerController.stop();
     _timerController.dispose();
     _clearScreenAwakeLock();
+    super.dispose();
   }
 
   @override
