@@ -14,7 +14,7 @@ class FaceWithShadow extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       foregroundPainter: _FaceWithShadowRemaining(color, duration),
-      painter: _FaceWithShadowBackground(color, initialDuration ?? duration),
+      painter: _FaceWithShadowBackground(color, initialDuration ?? duration, Theme.of(context).textTheme.body1.color),
     );
   }
 }
@@ -28,16 +28,12 @@ class _FaceWithShadowRemaining extends CustomPainter {
   final Duration duration;
   final double _angle;
   final Paint _remainingPaint;
-  final Color _lightTextColor;
-  final Color _darkTextColor;
 
   _FaceWithShadowRemaining(this.color, this.duration):
   this._angle = _2_PI * (duration.inMilliseconds / _HOUR.inMilliseconds),
         _remainingPaint = Paint()
           ..color = color
-          ..style = PaintingStyle.fill,
-        _lightTextColor = Colors.white70,
-        _darkTextColor = Colors.black;
+          ..style = PaintingStyle.fill;
 
   @override
     bool shouldRepaint(CustomPainter oldDelegate) {
@@ -93,10 +89,11 @@ class _FaceWithShadowBackground extends CustomPainter {
   final Paint _faceBorderPaint;
   final Duration initialDuration;
   final Paint _shadowPaint;
-  _FaceWithShadowBackground(this.color, this.initialDuration)
+
+  _FaceWithShadowBackground(this.color, this.initialDuration, [Color borderColor = Colors.black])
       :
    _faceBorderPaint = Paint()
-          ..color = Colors.black
+          ..color = borderColor
           ..style = PaintingStyle.stroke
           ..strokeWidth = 2.0,
           _shadowPaint = Paint()

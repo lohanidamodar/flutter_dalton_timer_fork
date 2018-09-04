@@ -1,10 +1,8 @@
-import 'dart:async';
 
 import 'package:dalton_timer/screenwakelock.dart';
 import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
-import 'package:soundpool/soundpool.dart';
 
 class TimerPage extends StatelessWidget {
   final Color timerColor;
@@ -88,6 +86,8 @@ class _TimerClockState extends State<_TimerClock>
 
   @override
   Widget build(BuildContext context) {
+    final appTheme = Theme
+        .of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -98,9 +98,8 @@ class _TimerClockState extends State<_TimerClock>
                 tag: widget.initialDuration.inMinutes,
                 child: Text(
                   "$_minutesLeft",
-                  style: Theme
-                      .of(context)
-                      .accentTextTheme
+                  style: appTheme
+                      .primaryTextTheme
                       .display3
                       .copyWith(fontWeight: FontWeight.bold),
                 )),
@@ -124,16 +123,20 @@ class _TimerClockState extends State<_TimerClock>
                   ),
                 ),
               ),
-              GestureDetector(
-                child: LayoutBuilder(
-                    builder: (context, constraints) => Icon(
-                          Icons.play_circle_outline,
-                          color: Colors.black.withOpacity(0.45),
-                          size: constraints.biggest.shortestSide,
-                        )),
-                onTap: () {
-                  _startTicking();
-                },
+              AnimatedOpacity(
+                duration: Duration(milliseconds: 200),
+                opacity: _running ? 0.0 : 0.36,
+                child: GestureDetector(
+                  child: LayoutBuilder(
+                      builder: (context, constraints) => Icon(
+                            Icons.play_circle_outline,
+                            color: appTheme.primaryTextTheme.body1.color,
+                            size: constraints.biggest.shortestSide,
+                          )),
+                  onTap: () {
+                    _startTicking();
+                  },
+                ),
               ),
             ],
           ),

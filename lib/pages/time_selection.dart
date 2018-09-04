@@ -1,4 +1,5 @@
 import 'package:dalton_timer/pages/about_app.dart';
+import 'package:dalton_timer/pages/settings.dart';
 import 'package:dalton_timer/pages/timer.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +135,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   }
 
   void _onAppInfo() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AppInfo(),));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage(),));
   }
 }
 
