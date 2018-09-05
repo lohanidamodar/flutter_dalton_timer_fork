@@ -113,7 +113,7 @@ class _TimerClockState extends State<_TimerClock>
                 child: Text(
                   "$_minutesLeft",
                   style: appTheme
-                      .primaryTextTheme
+                      .textTheme
                       .display3
                       .copyWith(fontWeight: FontWeight.bold),
                 )),
@@ -144,7 +144,7 @@ class _TimerClockState extends State<_TimerClock>
                   child: LayoutBuilder(
                       builder: (context, constraints) => Icon(
                             Icons.play_circle_outline,
-                            color: appTheme.primaryTextTheme.body1.color,
+                            color: appTheme.textTheme.display3.color,
                             size: constraints.biggest.shortestSide,
                           )),
                   onTap: () {
