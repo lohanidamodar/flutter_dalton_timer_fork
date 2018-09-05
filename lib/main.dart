@@ -1,19 +1,35 @@
+import 'package:dalton_timer/constants.dart';
 import 'package:dalton_timer/sound_manager.dart';
+import 'package:dalton_timer/widgets/instance_provider.dart';
 import 'package:dalton_timer/widgets/theme_switcher.dart';
 import 'package:dalton_timer/theme_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:dalton_timer/pages/time_selection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  runApp(MyApp(prefs));
+}
 
 class MyApp extends StatelessWidget {
+  final SharedPreferences prefs;
+
+  MyApp(this.prefs) : super();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return SoundsProvider(
-      child: ThemeSwitcher(
-        childBuilder: (c) => ThemedApp(),
-        initialTheme: appThemeBuilder(),
+      child: InstanceProvider<SharedPreferences>(
+        value: prefs,
+        child: ThemeSwitcher(
+          childBuilder: (c) => ThemedApp(),
+          initialTheme: appThemeBuilder(
+              brightness: prefs.getBool(SETTINGS_LIGHT_THEME) ?? false
+                  ? Brightness.light
+                  : Brightness.dark),
+        ),
       ),
       sounds: SoundsManager(context),
     );

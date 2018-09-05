@@ -1,6 +1,9 @@
+import 'package:dalton_timer/constants.dart';
+import 'package:dalton_timer/widgets/instance_provider.dart';
 import 'package:dalton_timer/widgets/theme_switcher.dart';
 import 'package:dalton_timer/theme_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -28,7 +31,12 @@ class SettingsPage extends StatelessWidget {
                 Switch(
                   value: currentTheme.brightness == Brightness.light,
                   onChanged: (isLight) {
-                    changeTheme.setTheme(appThemeBuilder(brightness : isLight ? Brightness.light : Brightness.dark));
+                    changeTheme.setTheme(appThemeBuilder(
+                        brightness:
+                            isLight ? Brightness.light : Brightness.dark));
+                    InstanceProvider
+                        .of<SharedPreferences>(context)
+                        .setBool(SETTINGS_LIGHT_THEME, isLight);
                   },
                 ),
               ],
