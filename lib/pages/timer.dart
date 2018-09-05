@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:dalton_timer/screenwakelock.dart';
 import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/faces.dart';
@@ -7,8 +9,9 @@ import 'package:flutter/material.dart';
 class TimerPage extends StatelessWidget {
   final Color timerColor;
   final Duration initialDuration;
+  final Future<bool> animationComplete;
 
-  const TimerPage({Key key, this.timerColor, this.initialDuration})
+  const TimerPage({Key key, this.timerColor, this.initialDuration, this.animationComplete})
       : super(key: key);
 
   @override
@@ -19,7 +22,7 @@ class TimerPage extends StatelessWidget {
         height: double.infinity,
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: new _TimerClock(
-            initialDuration: initialDuration, timerColor: timerColor),
+            initialDuration: initialDuration, timerColor: timerColor, pageReady: animationComplete),
       ),
     );
   }
@@ -30,10 +33,12 @@ class _TimerClock extends StatefulWidget {
     Key key,
     @required this.initialDuration,
     @required this.timerColor,
+    @required this.pageReady,
   }) : super(key: key);
 
   final Duration initialDuration;
   final Color timerColor;
+  final Future<bool> pageReady;
 
   @override
   _TimerClockState createState() {
@@ -49,10 +54,13 @@ class _TimerClockState extends State<_TimerClock>
 
   int _minutesLeft;
 
+  bool _pageReadyFlag;
+
   @override
   void initState() {
     super.initState();
     _running = false;
+    _pageReadyFlag = false;
     _minutesLeft = widget.initialDuration.inMinutes;
     _timerController =
         AnimationController(vsync: this, duration: widget.initialDuration)
@@ -74,6 +82,12 @@ class _TimerClockState extends State<_TimerClock>
               _minutesLeft = (_remainingAnimation.value.inSeconds / 60).ceil();
             });
           });
+    widget.pageReady.then((value) {
+      setState(() {
+        print("Page transition completed");
+        _pageReadyFlag = true;
+      });
+    });
   }
 
   @override
@@ -125,7 +139,7 @@ class _TimerClockState extends State<_TimerClock>
               ),
               AnimatedOpacity(
                 duration: Duration(milliseconds: 200),
-                opacity: _running ? 0.0 : 0.36,
+                opacity: _running || (!_pageReadyFlag) ? 0.0 : 0.36,
                 child: GestureDetector(
                   child: LayoutBuilder(
                       builder: (context, constraints) => Icon(

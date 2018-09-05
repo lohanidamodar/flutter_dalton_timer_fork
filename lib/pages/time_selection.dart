@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:dalton_timer/pages/about_app.dart';
 import 'package:dalton_timer/pages/settings.dart';
 import 'package:dalton_timer/pages/timer.dart';
+import 'package:dalton_timer/animation_state_aware_routes.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +23,17 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
 
   void _onDurationSelected(Color color, Duration duration) {
     print("duration selected $duration");
-    Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => TimerPage(
-                timerColor: color,
-                initialDuration: duration,
-              ),
-        ));
+    Future<bool> complete;
+
+    final route = MaterialPageRouteExtended(
+      builder: (BuildContext context) => TimerPage(
+        timerColor: color,
+        initialDuration: duration,
+          animationComplete: complete
+      ),
+    );
+    complete =  route.nextAnimationCompleted;
+    Navigator.of(context).push(route);
   }
 
   @override
