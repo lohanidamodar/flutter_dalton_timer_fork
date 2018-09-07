@@ -84,7 +84,6 @@ class _TimerClockState extends State<_TimerClock>
           });
     widget.pageReady.then((value) {
       setState(() {
-        print("Page transition completed");
         _pageReadyFlag = true;
       });
     });

@@ -1,4 +1,5 @@
 import 'package:dalton_timer/constants.dart';
+import 'package:dalton_timer/intl/localizations.dart';
 import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/instance_provider.dart';
 import 'package:dalton_timer/widgets/theme_switcher.dart';
@@ -46,11 +47,9 @@ class ThemedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: [
-        Locale('en'),
-        Locale('pl'),
-      ],
+      supportedLocales: kSupportedLocales,
       localizationsDelegates: [
+        TimerAppLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
