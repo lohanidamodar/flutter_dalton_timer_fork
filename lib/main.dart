@@ -3,8 +3,10 @@ import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/instance_provider.dart';
 import 'package:dalton_timer/widgets/theme_switcher.dart';
 import 'package:dalton_timer/theme_builder.dart';
-import 'package:flutter/material.dart';
 import 'package:dalton_timer/pages/time_selection.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -44,6 +46,14 @@ class ThemedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: [
+        Locale('en'),
+        Locale('pl'),
+      ],
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       title: 'Dalton Timer',
       theme: ChangeTheme.of(context).getTheme(),
       home: TimeSelectionPage(),
