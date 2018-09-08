@@ -49,8 +49,8 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
             onPressed: () => _onCustomTime(context, timeInput),
           ),
           IconButton(
-            icon: Icon(Icons.info_outline),
-            onPressed: _onAppInfo,
+            icon: Icon(Icons.settings),
+            onPressed: _onSettings,
           ),
         ],
       ),
@@ -142,7 +142,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
     });
   }
 
-  void _onAppInfo() {
+  void _onSettings() {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage(),));
   }
 }
