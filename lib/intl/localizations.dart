@@ -37,21 +37,53 @@ class TimerAppLocalizations {
 
   String get brightnessUseLightTheme => _translate['brightnessUseLightTheme'];
 
+  String get appearanceSection => _translate['appearanceSection'];
+
+  String get otherSettings => _translate['otherSettings'];
+
+  String get about => _translate['about'];
+
+  String get aboutApp => _translate['aboutApp'];
+
+  String get author => _translate['author'];
+
+  String get contactMe => _translate['contactMe'];
+
   // TRANSLATIONS
   static Map<String, Map<String, String>> _translations = {
     'en': {
       'pickTime': "Pick time",
       'enterTimeInMinutes': 'Enter time in minutes',
+
+      // settings
       'settings' : 'Settings',
+      'appearanceSection': 'Appearance',
       'brightness' : 'Brightness',
       'brightnessUseLightTheme': 'Use light theme',
+      'otherSettings': 'Other',
+
+      // about
+      'about': 'About',
+      'aboutApp': 'About application',
+      'author': 'Author',
+      'contactMe': 'Contact me',
     },
     'pl': {
       'pickTime': "Wybierz czas",
       'enterTimeInMinutes': 'Wpisz liczbę minut',
+
+      // settings
       'settings' : 'Ustawienia',
+      'appearanceSection': 'Wygląd',
       'brightness' : 'Jasność',
       'brightnessUseLightTheme': 'Użyj jasnego motywu',
+      'otherSettings': 'Inne',
+
+      // about
+      'about': 'O aplikacji',
+      'aboutApp': 'O aplikacji',
+      'author': 'Autor',
+      'contactMe': 'Wyślij wiadomość',
     },
   };
 }
