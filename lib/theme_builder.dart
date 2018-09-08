@@ -8,6 +8,6 @@ ThemeBuilder appThemeBuilder = ({brightness = Brightness.dark}) {
       primarySwatch: Colors.blueGrey,
       primaryColor: isLight ? null : Colors.blueGrey[900],
       backgroundColor: isLight ? null : Colors.grey[800],
-      accentColor: Colors.cyanAccent.shade200,
+      accentColor: Colors.cyanAccent.shade700,
       brightness: isLight ? Brightness.light : Brightness.dark);
 };
