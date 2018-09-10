@@ -8,12 +8,13 @@ abstract class Sounds {
 }
 
 class SoundsManager extends Sounds {
+  Soundpool alarmPool;
   int _alarmSoundId = -1;
 
   SoundsManager(BuildContext context) {
-    //TODO can it be implemented better way?
+    alarmPool = Soundpool(streamType: StreamType.alarm);
     DefaultAssetBundle.of(context).load("sounds/Shut_Down1.wav").then((data) {
-      Soundpool.load(data).then((id) {
+      alarmPool.load(data).then((id) {
         _alarmSoundId = id;
       });
     });
@@ -21,7 +22,7 @@ class SoundsManager extends Sounds {
 
   @override
   Future<int> playAlarm() {
-    return Soundpool.play(_alarmSoundId, repeat: 3);
+    return alarmPool.play(_alarmSoundId, repeat: 3);
   }
   
 }
