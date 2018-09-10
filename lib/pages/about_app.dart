@@ -1,5 +1,6 @@
 import 'package:dalton_timer/intl/localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class AppInfo extends StatelessWidget {
   @override
@@ -66,6 +67,10 @@ class AppInfo extends StatelessWidget {
   }
 
   void _messageAuthor() {
-    //TODO implement sending data
+    Email email = Email(
+      recipients: ["ukasz.apps@gmail.com"],
+      subject: 'Message from Dalton Timer'
+    );
+    FlutterEmailSender.send(email);
   }
 }
