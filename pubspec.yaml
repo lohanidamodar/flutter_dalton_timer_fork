@@ -5,6 +5,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+      sdk: flutter
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -12,6 +15,9 @@ dependencies:
   soundpool: ^0.1.0
 
   shared_preferences: ^0.4.2
+
+  # For sending email from About page
+  flutter_email_sender: ^0.0.4
 
 dev_dependencies:
   flutter_test:

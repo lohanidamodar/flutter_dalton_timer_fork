@@ -18,8 +18,7 @@ class MaterialPageRouteExtended<T> extends MaterialPageRoute<T> {
   final Completer<bool> _transitionCompleter = new Completer<bool>();
 
   void _handleStatusChanged(AnimationStatus status) {
-    switch (status) {
-      case AnimationStatus.completed:
+    if (status == AnimationStatus.completed) {
         _transitionCompleter.complete(true);
     }
   }

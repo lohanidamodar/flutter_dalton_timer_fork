@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dalton_timer/intl/localizations.dart';
 import 'package:dalton_timer/pages/about_app.dart';
 import 'package:dalton_timer/pages/settings.dart';
 import 'package:dalton_timer/pages/timer.dart';
@@ -22,7 +23,6 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   String _minutesText;
 
   void _onDurationSelected(Color color, Duration duration) {
-    print("duration selected $duration");
     Future<bool> complete;
 
     final route = MaterialPageRouteExtended(
@@ -40,9 +40,10 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   Widget build(BuildContext context) {
     final GlobalKey<State<TextField>> timeInput = GlobalKey();
     _minutesText = null;
+    var localizations = TimerAppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pick time"),
+        title: Text(localizations.pickTime),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.timelapse),
@@ -102,6 +103,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
 
   void _onCustomTime(
       BuildContext context, GlobalKey<State<TextField>> timeInput) {
+    var localizations = TimerAppLocalizations.of(context);
     showModalBottomSheet<Duration>(
       context: context,
       builder: (BuildContext c) => Container(
@@ -112,7 +114,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                 TextField(
                   autofocus: true,
                   decoration: InputDecoration(
-                    hintText: "Enter time in minutes",
+                    hintText: localizations.enterTimeInMinutesHint,
                   ),
                   keyboardType: TextInputType.numberWithOptions(),
                   key: timeInput,
@@ -130,7 +132,7 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                         minutes != null ? Duration(minutes: minutes) : null;
                     Navigator.of(context).pop(duration);
                   },
-                  child: Text("OK"),
+                  child: Text(Localizations.of<MaterialLocalizations>(context, MaterialLocalizations).okButtonLabel),
                 ),
               ],
             ),
