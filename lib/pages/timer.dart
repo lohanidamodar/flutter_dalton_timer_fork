@@ -127,8 +127,7 @@ class _TimerClockState extends State<_TimerClock>
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                  child: FaceWithShadow(
-                    widget.timerColor,
+                  child: FaceClassic(
                     _running
                         ? _remainingAnimation.value
                         : widget.initialDuration,
