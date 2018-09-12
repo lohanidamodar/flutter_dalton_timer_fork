@@ -175,8 +175,9 @@ class _TimerCell extends StatelessWidget {
                 tag: duration,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FaceClassic(
-                    duration,
+                  child: FaceFromSettings(
+                    color: color,
+                    duration: duration,
                   ),
                 ),
               ),

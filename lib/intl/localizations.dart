@@ -49,6 +49,12 @@ class TimerAppLocalizations {
 
   String get contactMe => _translate['contactMe'];
 
+  String get pickFace => _translate['pickFace'];
+
+  String get defaultFace => _translate['defaultFace'];
+
+  String get classicFace => _translate['classicFace'];
+
   // TRANSLATIONS
   static Map<String, Map<String, String>> _translations = {
     'en': {
@@ -61,6 +67,9 @@ class TimerAppLocalizations {
       'brightness' : 'Brightness',
       'brightnessUseLightTheme': 'Use light theme',
       'otherSettings': 'Other',
+      'pickFace': 'Pick face',
+      'defaultFace': 'Default',
+      'classicFace': 'Classic',
 
       // about
       'about': 'About',
@@ -78,6 +87,9 @@ class TimerAppLocalizations {
       'brightness' : 'Jasność',
       'brightnessUseLightTheme': 'Użyj jasnego motywu',
       'otherSettings': 'Inne',
+      'pickFace': 'Wybierz tarczę',
+      'defaultFace': 'Domyślna',
+      'classicFace': 'Klasyczna',
 
       // about
       'about': 'O aplikacji',
