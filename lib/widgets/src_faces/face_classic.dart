@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dalton_timer/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -29,16 +30,16 @@ class _FaceClassicBackgroundPainter extends CustomPainter {
           ..strokeWidth = 2.0;
   final Paint _borderPaint;
   final _5minutesPaint = Paint()
-    ..color = Colors.red
+    ..color = fiveMinColor
     ..style = PaintingStyle.fill;
   final _10minutesPaint = Paint()
-    ..color = Colors.green.shade700
+    ..color = tenMinColor
     ..style = PaintingStyle.fill;
   final _15minutesPaint = Paint()
-    ..color = Colors.lightBlue
+    ..color = fifteenMinColor
     ..style = PaintingStyle.fill;
   final _30minutesPaint = Paint()
-    ..color = Colors.amber.shade600
+    ..color = thirtyMinColor
     ..style = PaintingStyle.fill;
 
   @override
