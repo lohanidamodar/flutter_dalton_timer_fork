@@ -30,7 +30,7 @@ GeneratedPluginRegistrant.java
 
 .DS_Store
 *.swp
-profile
+ios/**/profile
 
 DerivedData/
 build/
