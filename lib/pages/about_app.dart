@@ -46,10 +46,12 @@ class AppInfo extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Column(
-
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(localizations.contactMe, style: labelStyle,),
+                      Text(
+                        localizations.contactMe,
+                        style: labelStyle,
+                      ),
                       Text('ukasz.apps@gmail.com'),
                     ],
                     mainAxisSize: MainAxisSize.min,
@@ -57,8 +59,21 @@ class AppInfo extends StatelessWidget {
                 ),
               ),
               onTap: _messageAuthor,
-            )
-            // TODO add legal informations
+            ),
+            Divider(),
+            // licences informations
+            InkWell(
+              child: SizedBox(
+                height: 56.0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(localizations.licencesInformation)),
+                ),
+              ),
+              onTap: () => _showLegal(context),
+            ),
             // TODO add COPPA informations
           ],
         ),
@@ -68,9 +83,17 @@ class AppInfo extends StatelessWidget {
 
   void _messageAuthor() {
     Email email = Email(
-      recipients: ["ukasz.apps@gmail.com"],
-      subject: 'Message from Dalton Timer'
-    );
+        recipients: ["ukasz.apps@gmail.com"],
+        subject: 'Message from Dalton Timer');
     FlutterEmailSender.send(email);
+  }
+
+  void _showLegal(BuildContext context) async {
+    final licenceText =
+        await DefaultAssetBundle.of(context).loadString("LICENCE");
+    showLicensePage(
+        context: context,
+        applicationName: "Dalton Timer",
+        applicationLegalese: licenceText);
   }
 }

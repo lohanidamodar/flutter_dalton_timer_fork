@@ -49,6 +49,7 @@ class TimerAppLocalizations {
 
   String get contactMe => _translate['contactMe'];
 
+  String get licencesInformation => _translate['licencesInformation'];
   // TRANSLATIONS
   static Map<String, Map<String, String>> _translations = {
     'en': {
@@ -67,6 +68,7 @@ class TimerAppLocalizations {
       'aboutApp': 'About application',
       'author': 'Author',
       'contactMe': 'Contact me',
+      'licencesInformation': 'Licences',
     },
     'pl': {
       'pickTime': "Wybierz czas",
@@ -84,6 +86,7 @@ class TimerAppLocalizations {
       'aboutApp': 'O aplikacji',
       'author': 'Autor',
       'contactMe': 'Wyślij wiadomość',
+      'licencesInformation': 'Wykorzystywane licencje',
     },
   };
 }
