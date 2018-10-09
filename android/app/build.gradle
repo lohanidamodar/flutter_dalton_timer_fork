@@ -34,7 +34,7 @@ android {
         applicationId "pl.ukaszapps.daltontimer"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 3
+        versionCode 4
         versionName "0.3.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
