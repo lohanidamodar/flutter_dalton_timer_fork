@@ -49,6 +49,12 @@ class TimerAppLocalizations {
 
   String get contactMe => _translate['contactMe'];
 
+  String get pickFace => _translate['pickFace'];
+
+  String get defaultFace => _translate['defaultFace'];
+
+  String get classicFace => _translate['classicFace'];
+
   String get licencesInformation => _translate['licencesInformation'];
 
   String get privacyPolicy => _translate['privacyPolicy'];
@@ -67,6 +73,9 @@ class TimerAppLocalizations {
       'brightness' : 'Brightness',
       'brightnessUseLightTheme': 'Use light theme',
       'otherSettings': 'Other',
+      'pickFace': 'Pick face',
+      'defaultFace': 'Default',
+      'classicFace': 'Classic',
 
       // about
       'about': 'About',
@@ -88,6 +97,9 @@ class TimerAppLocalizations {
       'brightness' : 'Jasność',
       'brightnessUseLightTheme': 'Użyj jasnego motywu',
       'otherSettings': 'Inne',
+      'pickFace': 'Wybierz tarczę',
+      'defaultFace': 'Domyślna',
+      'classicFace': 'Klasyczna',
 
       // about
       'about': 'O aplikacji',

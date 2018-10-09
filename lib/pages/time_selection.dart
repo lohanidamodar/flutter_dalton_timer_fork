@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dalton_timer/constants.dart';
 import 'package:dalton_timer/intl/localizations.dart';
 import 'package:dalton_timer/pages/about_app.dart';
 import 'package:dalton_timer/pages/settings.dart';
@@ -65,12 +66,12 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _TimerCell(
-                  color: Colors.red,
+                  color: fiveMinColor,
                   duration: Duration(minutes: 5),
                   onTap: _onDurationSelected,
                 ),
                 _TimerCell(
-                  color: Colors.green.shade700,
+                  color: tenMinColor,
                   duration: Duration(minutes: 10),
                   onTap: _onDurationSelected,
                 ),
@@ -85,11 +86,11 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
               children: <Widget>[
                 _TimerCell(
                   onTap: _onDurationSelected,
-                  color: Colors.lightBlue,
+                  color: fifteenMinColor,
                   duration: Duration(minutes: 15),
                 ),
                 _TimerCell(
-                  color: Colors.amber.shade600,
+                  color: thirtyMinColor,
                   duration: Duration(minutes: 30),
                   onTap: _onDurationSelected,
                 ),
@@ -174,9 +175,9 @@ class _TimerCell extends StatelessWidget {
                 tag: duration,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FaceWithShadow(
-                    color,
-                    duration,
+                  child: FaceFromSettings(
+                    color: color,
+                    duration: duration,
                   ),
                 ),
               ),
