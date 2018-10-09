@@ -19,6 +19,8 @@ dependencies:
   # For sending email from About page
   flutter_email_sender: ^0.0.4
 
+  http: ^0.11.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,3 +43,5 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - sounds/Shut_Down1.wav
+    # licence text
+    - LICENCE
