@@ -50,6 +50,11 @@ class TimerAppLocalizations {
   String get contactMe => _translate['contactMe'];
 
   String get licencesInformation => _translate['licencesInformation'];
+
+  String get privacyPolicy => _translate['privacyPolicy'];
+
+  String get policyUnavailableMessage => _translate['policyUnavailableMessage'];
+
   // TRANSLATIONS
   static Map<String, Map<String, String>> _translations = {
     'en': {
@@ -69,6 +74,9 @@ class TimerAppLocalizations {
       'author': 'Author',
       'contactMe': 'Contact me',
       'licencesInformation': 'Licences',
+      // privacy policy
+      'privacyPolicy': 'Privacy policy',
+      'policyUnavailableMessage':'Unable to load privacy policy.',
     },
     'pl': {
       'pickTime': "Wybierz czas",
@@ -87,6 +95,9 @@ class TimerAppLocalizations {
       'author': 'Autor',
       'contactMe': 'Wyślij wiadomość',
       'licencesInformation': 'Wykorzystywane licencje',
+      // privacy policy
+      'privacyPolicy': 'Polityka prywatności',
+      'policyUnavailableMessage': 'Obecnie nie można pobrać polityki prywatności.',
     },
   };
 }
