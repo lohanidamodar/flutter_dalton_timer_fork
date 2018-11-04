@@ -33,9 +33,9 @@ android {
     defaultConfig {
         applicationId "pl.ukaszapps.daltontimer"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 27
         versionCode 4
-        versionName "0.3.0"
+        versionName "0.4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
