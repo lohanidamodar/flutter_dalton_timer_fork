@@ -1,5 +1,5 @@
-
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dalton_timer/screenwakelock.dart';
 import 'package:dalton_timer/sound_manager.dart';
@@ -11,7 +11,8 @@ class TimerPage extends StatelessWidget {
   final Duration initialDuration;
   final Future<bool> animationComplete;
 
-  const TimerPage({Key key, this.timerColor, this.initialDuration, this.animationComplete})
+  const TimerPage(
+      {Key key, this.timerColor, this.initialDuration, this.animationComplete})
       : super(key: key);
 
   @override
@@ -22,7 +23,9 @@ class TimerPage extends StatelessWidget {
         height: double.infinity,
         padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: new _TimerClock(
-            initialDuration: initialDuration, timerColor: timerColor, pageReady: animationComplete),
+            initialDuration: initialDuration,
+            timerColor: timerColor,
+            pageReady: animationComplete),
       ),
     );
   }
@@ -50,11 +53,16 @@ class _TimerClockState extends State<_TimerClock>
     with SingleTickerProviderStateMixin {
   bool _running = false;
   AnimationController _timerController;
+  // ignore: unused_field
   Animation<Duration> _remainingAnimation;
 
   int _minutesLeft;
 
   bool _pageReadyFlag;
+
+  DateTime _initialTime;
+
+  DateTime _finishTime;
 
   @override
   void initState() {
@@ -69,17 +77,22 @@ class _TimerClockState extends State<_TimerClock>
                 status == AnimationStatus.completed) {
               _clearScreenAwakeLock();
             }
-            if (status == AnimationStatus.completed) {
-              _playAlarmSound(context);
-            }
           });
 
     _remainingAnimation = Tween(
             begin: widget.initialDuration, end: Duration.zero)
         .animate(_timerController)
           ..addListener(() {
+            final millisecondsLeft =
+                _finishTime.difference(DateTime.now()).inMilliseconds;
+            final newMinutesLeft = max((millisecondsLeft / 60000).ceil(), 0);
+
+            if (millisecondsLeft <= 0) {
+              _playAlarmSound(context);
+              _timerController.stop();
+            }
             setState(() {
-              _minutesLeft = (_remainingAnimation.value.inSeconds / 60).ceil();
+              _minutesLeft = newMinutesLeft;
             });
           });
     widget.pageReady.then((value) {
@@ -99,8 +112,7 @@ class _TimerClockState extends State<_TimerClock>
 
   @override
   Widget build(BuildContext context) {
-    final appTheme = Theme
-        .of(context);
+    final appTheme = Theme.of(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -111,9 +123,7 @@ class _TimerClockState extends State<_TimerClock>
                 tag: widget.initialDuration.inMinutes,
                 child: Text(
                   "$_minutesLeft",
-                  style: appTheme
-                      .textTheme
-                      .display3
+                  style: appTheme.textTheme.display3
                       .copyWith(fontWeight: FontWeight.bold),
                 )),
           ),
@@ -130,7 +140,7 @@ class _TimerClockState extends State<_TimerClock>
                   child: FaceFromSettings(
                     color: widget.timerColor,
                     duration: _running
-                        ? _remainingAnimation.value
+                        ? _finishTime.difference(DateTime.now())
                         : widget.initialDuration,
                     initialDuration: widget.initialDuration,
                   ),
@@ -161,6 +171,8 @@ class _TimerClockState extends State<_TimerClock>
   void _startTicking() {
     _setScreenAwakeLock();
     setState(() {
+      _initialTime = DateTime.now();
+      _finishTime = _initialTime.add(widget.initialDuration);
       _running = true;
       _timerController.forward();
     });
