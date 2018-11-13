@@ -113,6 +113,12 @@ class _TimerClockState extends State<_TimerClock>
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
+    var currentDuration = _running
+        ? _finishTime.difference(DateTime.now())
+        : widget.initialDuration;
+    if (currentDuration.isNegative){
+      currentDuration = Duration();
+    }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -139,9 +145,7 @@ class _TimerClockState extends State<_TimerClock>
                       EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                   child: FaceFromSettings(
                     color: widget.timerColor,
-                    duration: _running
-                        ? _finishTime.difference(DateTime.now())
-                        : widget.initialDuration,
+                    duration: currentDuration,
                     initialDuration: widget.initialDuration,
                   ),
                 ),
