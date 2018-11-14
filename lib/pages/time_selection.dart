@@ -28,12 +28,11 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
 
     final route = MaterialPageRouteExtended(
       builder: (BuildContext context) => TimerPage(
-        timerColor: color,
-        initialDuration: duration,
-          animationComplete: complete
-      ),
+          timerColor: color,
+          initialDuration: duration,
+          animationComplete: complete),
     );
-    complete =  route.nextAnimationCompleted;
+    complete = route.nextAnimationCompleted;
     Navigator.of(context).push(route);
   }
 
@@ -133,7 +132,9 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                         minutes != null ? Duration(minutes: minutes) : null;
                     Navigator.of(context).pop(duration);
                   },
-                  child: Text(Localizations.of<MaterialLocalizations>(context, MaterialLocalizations).okButtonLabel),
+                  child: Text(Localizations.of<MaterialLocalizations>(
+                          context, MaterialLocalizations)
+                      .okButtonLabel),
                 ),
               ],
             ),
@@ -146,7 +147,9 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   }
 
   void _onSettings() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage(),));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SettingsPage(),
+    ));
   }
 }
 
@@ -183,10 +186,16 @@ class _TimerCell extends StatelessWidget {
               ),
               Center(
                 child: Transform(
-                  transform: Matrix4.translationValues(0.0, Theme.of(context).textTheme.headline.fontSize*0.75, 0.0),
+                  transform: Matrix4.translationValues(
+                      0.0,
+                      Theme.of(context).textTheme.headline.fontSize * 1.25,
+                      0.0),
                   child: Hero(
                     tag: duration.inMinutes,
-                    child: Text("${duration.inMinutes}", style: Theme.of(context).textTheme.headline,),
+                    child: Text(
+                      "${duration.inMinutes}",
+                      style: Theme.of(context).textTheme.headline,
+                    ),
                   ),
                 ),
               )

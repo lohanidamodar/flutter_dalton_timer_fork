@@ -66,11 +66,10 @@ class SettingsPage extends StatelessWidget {
               Switch(
                 value: currentTheme.brightness == Brightness.light,
                 onChanged: (isLight) {
-                  changeTheme.setTheme(appThemeBuilder(
+                  changeTheme.setTheme(appThemeBuilder(context,
                       brightness:
                           isLight ? Brightness.light : Brightness.dark));
-                  InstanceProvider
-                      .of<SharedPreferences>(context)
+                  InstanceProvider.of<SharedPreferences>(context)
                       .setBool(SETTINGS_LIGHT_THEME, isLight);
                 },
               ),
@@ -100,8 +99,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _routeToAboutPage(BuildContext context) {
-    Navigator
-        .of(context)
+    Navigator.of(context)
         .push(MaterialPageRoute<AppInfo>(builder: (c) => AppInfo()));
   }
 

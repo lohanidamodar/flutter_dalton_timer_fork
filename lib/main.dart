@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dalton_timer/constants.dart';
 import 'package:dalton_timer/intl/localizations.dart';
 import 'package:dalton_timer/sound_manager.dart';
@@ -23,18 +25,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return SoundsProvider(
-      child: InstanceProvider<SharedPreferences>(
-        value: prefs,
-        child: ThemeSwitcher(
-          childBuilder: (c) => ThemedApp(),
-          initialTheme: appThemeBuilder(
-              brightness: prefs.getBool(SETTINGS_LIGHT_THEME) ?? false
-                  ? Brightness.light
-                  : Brightness.dark),
-        ),
+    return MediaQuery(
+      data: MediaQueryData.fromWindow(window),
+      child: Builder(
+        builder: (builderContext) => SoundsProvider(
+              child: InstanceProvider<SharedPreferences>(
+                value: prefs,
+                child: ThemeSwitcher(
+                  childBuilder: (c) => ThemedApp(),
+                  initialTheme: appThemeBuilder(builderContext,
+                      brightness: prefs.getBool(SETTINGS_LIGHT_THEME) ?? false
+                          ? Brightness.light
+                          : Brightness.dark),
+                ),
+              ),
+              sounds: SoundsManager(builderContext),
+            ),
       ),
-      sounds: SoundsManager(context),
     );
   }
 }
