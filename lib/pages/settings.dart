@@ -17,16 +17,20 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(localizations.settings),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: _buildAppearanceSettings(
-              context, localizations, currentTheme)
-            ..add(SizedBox(
-              height: 16.0,
-            ))
-            ..addAll(_buildOtherSettings(context, localizations, currentTheme)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _buildAppearanceSettings(
+                context, localizations, currentTheme)
+              ..add(SizedBox(
+                height: 16.0,
+              ))
+              ..addAll(
+                  _buildOtherSettings(context, localizations, currentTheme)),
+          ),
         ),
       ),
     );
@@ -69,8 +73,7 @@ class SettingsPage extends StatelessWidget {
                   changeTheme.setTheme(appThemeBuilder(
                       brightness:
                           isLight ? Brightness.light : Brightness.dark));
-                  InstanceProvider
-                      .of<SharedPreferences>(context)
+                  InstanceProvider.of<SharedPreferences>(context)
                       .setBool(SETTINGS_LIGHT_THEME, isLight);
                 },
               ),
@@ -100,8 +103,7 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _routeToAboutPage(BuildContext context) {
-    Navigator
-        .of(context)
+    Navigator.of(context)
         .push(MaterialPageRoute<AppInfo>(builder: (c) => AppInfo()));
   }
 
