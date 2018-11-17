@@ -38,8 +38,8 @@ android {
         applicationId "pl.ukaszapps.daltontimer"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 6
-        versionName "0.5.1"
+        versionCode Integer.valueOf(localProperties['flutter.versionCode'])
+        versionName localProperties['flutter.versionName']
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
