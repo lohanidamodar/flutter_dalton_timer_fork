@@ -116,7 +116,7 @@ class _TimerClockState extends State<_TimerClock>
     var currentDuration = _running
         ? _finishTime.difference(DateTime.now())
         : widget.initialDuration;
-    if (currentDuration.isNegative){
+    if (currentDuration.isNegative) {
       currentDuration = Duration();
     }
     return Column(
@@ -173,13 +173,15 @@ class _TimerClockState extends State<_TimerClock>
   }
 
   void _startTicking() {
-    _setScreenAwakeLock();
-    setState(() {
-      _initialTime = DateTime.now();
-      _finishTime = _initialTime.add(widget.initialDuration);
-      _running = true;
-      _timerController.forward();
-    });
+    if (!_running) {
+      _setScreenAwakeLock();
+      setState(() {
+        _initialTime = DateTime.now();
+        _finishTime = _initialTime.add(widget.initialDuration);
+        _running = true;
+        _timerController.forward();
+      });
+    }
   }
 
   void _setScreenAwakeLock() {
