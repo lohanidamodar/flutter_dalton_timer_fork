@@ -5,6 +5,7 @@ import 'package:dalton_timer/screenwakelock.dart';
 import 'package:dalton_timer/sound_manager.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TimerPage extends StatelessWidget {
   final Color timerColor;
@@ -17,11 +18,11 @@ class TimerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return SafeArea(
+      child: Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
         width: double.infinity,
         height: double.infinity,
-        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: new _TimerClock(
             initialDuration: initialDuration,
             timerColor: timerColor,
@@ -89,6 +90,7 @@ class _TimerClockState extends State<_TimerClock>
 
             if (millisecondsLeft <= 0) {
               _playAlarmSound(context);
+              _restoreSystemUIOverlay();
               _timerController.stop();
             }
             setState(() {
@@ -113,6 +115,7 @@ class _TimerClockState extends State<_TimerClock>
   @override
   Widget build(BuildContext context) {
     final appTheme = Theme.of(context);
+    final screenHeight = MediaQuery.of(context).size.height;
     var currentDuration = _running
         ? _finishTime.difference(DateTime.now())
         : widget.initialDuration;
@@ -122,18 +125,16 @@ class _TimerClockState extends State<_TimerClock>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Center(
-            child: Hero(
-                tag: widget.initialDuration.inMinutes,
-                child: Text(
-                  "$_minutesLeft",
-                  style: appTheme.textTheme.display3
-                      .copyWith(fontWeight: FontWeight.bold),
-                )),
-          ),
+        SizedBox(
+          height: screenHeight * 0.07,
         ),
+        Hero(
+            tag: widget.initialDuration.inMinutes,
+            child: Text(
+              "$_minutesLeft",
+              style: appTheme.textTheme.display3
+                  .copyWith(fontWeight: FontWeight.bold),
+            )),
         Expanded(
           child: Stack(
             fit: StackFit.expand,
@@ -175,6 +176,7 @@ class _TimerClockState extends State<_TimerClock>
   void _startTicking() {
     if (!_running) {
       _setScreenAwakeLock();
+      _hideSystemUIOverlays();
       setState(() {
         _initialTime = DateTime.now();
         _finishTime = _initialTime.add(widget.initialDuration);
@@ -195,4 +197,9 @@ class _TimerClockState extends State<_TimerClock>
   void _playAlarmSound(BuildContext context) {
     SoundsProvider.of(context).playAlarm();
   }
+
+  Future<void> _hideSystemUIOverlays() =>
+      SystemChrome.setEnabledSystemUIOverlays([]);
+  Future<void> _restoreSystemUIOverlay() =>
+      SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 }

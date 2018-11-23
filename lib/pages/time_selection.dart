@@ -8,6 +8,7 @@ import 'package:dalton_timer/pages/timer.dart';
 import 'package:dalton_timer/animation_state_aware_routes.dart';
 import 'package:dalton_timer/widgets/faces.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TimeSelectionPage extends StatefulWidget {
   const TimeSelectionPage({
@@ -28,13 +29,16 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
 
     final route = MaterialPageRouteExtended(
       builder: (BuildContext context) => TimerPage(
-        timerColor: color,
-        initialDuration: duration,
-          animationComplete: complete
-      ),
+          timerColor: color,
+          initialDuration: duration,
+          animationComplete: complete),
     );
-    complete =  route.nextAnimationCompleted;
-    Navigator.of(context).push(route);
+    complete = route.nextAnimationCompleted;
+
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    Navigator.of(context).push(route).whenComplete(() {
+      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    });
   }
 
   @override
@@ -133,7 +137,9 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
                         minutes != null ? Duration(minutes: minutes) : null;
                     Navigator.of(context).pop(duration);
                   },
-                  child: Text(Localizations.of<MaterialLocalizations>(context, MaterialLocalizations).okButtonLabel),
+                  child: Text(Localizations.of<MaterialLocalizations>(
+                          context, MaterialLocalizations)
+                      .okButtonLabel),
                 ),
               ],
             ),
@@ -146,7 +152,9 @@ class _TimeSelectionPageState extends State<TimeSelectionPage> {
   }
 
   void _onSettings() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsPage(),));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SettingsPage(),
+    ));
   }
 }
 
@@ -183,10 +191,16 @@ class _TimerCell extends StatelessWidget {
               ),
               Center(
                 child: Transform(
-                  transform: Matrix4.translationValues(0.0, Theme.of(context).textTheme.headline.fontSize*0.75, 0.0),
+                  transform: Matrix4.translationValues(
+                      0.0,
+                      Theme.of(context).textTheme.headline.fontSize * 0.75,
+                      0.0),
                   child: Hero(
                     tag: duration.inMinutes,
-                    child: Text("${duration.inMinutes}", style: Theme.of(context).textTheme.headline,),
+                    child: Text(
+                      "${duration.inMinutes}",
+                      style: Theme.of(context).textTheme.headline,
+                    ),
                   ),
                 ),
               )
